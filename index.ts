@@ -2,18 +2,18 @@
 const subAsyncThrowSucceeds = false;
 const subPromiseSucceeds = false;
 
-import "./style.css"; // import stylesheet
+import './style.css'; // import stylesheet
 
 const log = (message: string) => {
-  const logDiv = document.createElement("div");
+  const logDiv = document.createElement('div');
   logDiv.innerHTML = message;
-  const appDiv: HTMLElement = document.getElementById("app");
+  const appDiv: HTMLElement = document.getElementById('app');
   appDiv.appendChild(logDiv);
 };
 
 class App {
   run = async (): Promise<void> => {
-    log("Run start");
+    log('Run start');
 
     const subAsyncThrowResult = await this.subAsyncThrow();
     log(`subAsyncThrowResult=${subAsyncThrowResult}`);
@@ -29,46 +29,46 @@ class App {
     //   log(`Run catch: ${error}`);
     // }
 
-    log("Run end");
+    log('Run end');
   };
 
   subAsyncThrow = async (): Promise<string> => {
-    log("subAsyncThrow start");
+    log('subAsyncThrow start');
 
-    const x = "subAsyncThrowResultString";
-    if (subAsyncThrowSucceeds == false) throw Error("subAsyncThrow-Error");
+    const x = 'subAsyncThrowResultString';
+    if (subAsyncThrowSucceeds == false) throw Error('subAsyncThrow-Error');
 
-    log("subAsyncThrow end");
+    log('subAsyncThrow end');
     return x;
   };
 
   subPromise = (): Promise<string> => {
     return new Promise(async (resolve, reject) => {
-      log("subPromise start");
+      log('subPromise start');
 
-      const x = "subPromiseResultString";
+      const x = 'subPromiseResultString';
       // if (success == false) throw Error('subAsyncThrow-Error');
-      if (subPromiseSucceeds == false) reject("subPromise-Reject");
+      if (subPromiseSucceeds == false) reject('subPromise-Reject');
 
-      log("subPromise end");
-      resolve(x + " aaa");
+      log('subPromise end');
+      resolve(x + ' aaa');
 
-      log("subPromise second end");
-      resolve(x + " second");
+      log('subPromise second end');
+      resolve(x + ' second');
 
-      reject(x + " second fail");
+      reject(x + ' second fail');
 
-      return "bbb";
+      return 'bbb';
     });
   };
 }
 
-log("Index: start of lines");
+log('Index: start of lines');
 
 const app = new App();
 app
   .run() // await cannot be used because we are not in an async method
-  .then(() => log("App then"))
+  .then(() => log('App then'))
   .catch(error => log(`App catch: ${error}`));
 
-log("Index: end of lines");
+log('Index: end of lines');
