@@ -1,6 +1,7 @@
 // modify these to play around with which functions throw errors
 const subAsyncThrowSucceeds = false;
 const subPromiseSucceeds = false;
+const catchWithTryCatch = false; // otherwise with .catch(err=> { ... }) later on
 
 import './style.css'; // import stylesheet
 
@@ -15,19 +16,24 @@ class App {
   run = async (): Promise<void> => {
     log('Run start');
 
-    const subAsyncThrowResult = await this.subAsyncThrow();
-    log(`subAsyncThrowResult=${subAsyncThrowResult}`);
-    const subPromiseResult = await this.subPromise();
-    log(`subPromiseResult=${subPromiseResult}`);
+    if (catchWithTryCatch) {
+      
+      try {
+        const subAsyncThrowResult = await this.subAsyncThrow();
+        log(`subAsyncThrowResult=${subAsyncThrowResult}`);
+        const subPromiseResult = await this.subPromise();
+        log(`subPromiseResult=${subPromiseResult}`);
+      } catch (error) {
+        log(`Run catch: ${error}`);
+      }
 
-    // try {
-    //   const subAsyncThrowResult = await this.subAsyncThrow();
-    //   log(`subAsyncThrowResult=${subAsyncThrowResult}`);
-    //   const subPromiseResult = await this.subPromise();
-    //   log(`subPromiseResult=${subPromiseResult}`);
-    // } catch (error) {
-    //   log(`Run catch: ${error}`);
-    // }
+    } else {
+
+      const subAsyncThrowResult = await this.subAsyncThrow();
+      log(`subAsyncThrowResult=${subAsyncThrowResult}`);
+      const subPromiseResult = await this.subPromise();
+      log(`subPromiseResult=${subPromiseResult}`);
+    }
 
     log('Run end');
   };
