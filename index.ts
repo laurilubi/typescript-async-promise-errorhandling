@@ -1,5 +1,8 @@
-// Import stylesheets
-import "./style.css";
+// modify these to play around with which functions throw errors
+const subAsyncThrowSucceeds = false;
+const subPromiseSucceeds = false;
+
+import "./style.css"; // import stylesheet
 
 const log = (message: string) => {
   const logDiv = document.createElement("div");
@@ -12,15 +15,15 @@ class App {
   run = async (): Promise<void> => {
     log("Run start");
 
-    const subAsyncThrowResult = await this.subAsyncThrow(false);
+    const subAsyncThrowResult = await this.subAsyncThrow();
     log(`subAsyncThrowResult=${subAsyncThrowResult}`);
-    const subPromiseResult = await this.subPromise(false);
+    const subPromiseResult = await this.subPromise();
     log(`subPromiseResult=${subPromiseResult}`);
 
     // try {
-    //   const subAsyncThrowResult = await this.subAsyncThrow(false);
+    //   const subAsyncThrowResult = await this.subAsyncThrow();
     //   log(`subAsyncThrowResult=${subAsyncThrowResult}`);
-    //   const subPromiseResult = await this.subPromise(false);
+    //   const subPromiseResult = await this.subPromise();
     //   log(`subPromiseResult=${subPromiseResult}`);
     // } catch (error) {
     //   log(`Run catch: ${error}`);
@@ -29,23 +32,23 @@ class App {
     log("Run end");
   };
 
-  subAsyncThrow = async (success: boolean): Promise<string> => {
+  subAsyncThrow = async (): Promise<string> => {
     log("subAsyncThrow start");
 
     const x = "subAsyncThrowResultString";
-    if (success == false) throw Error("subAsyncThrow-Error");
+    if (subAsyncThrowSucceeds == false) throw Error("subAsyncThrow-Error");
 
     log("subAsyncThrow end");
     return x;
   };
 
-  subPromise = (success: boolean): Promise<string> => {
+  subPromise = (): Promise<string> => {
     return new Promise(async (resolve, reject) => {
       log("subPromise start");
 
       const x = "subPromiseResultString";
       // if (success == false) throw Error('subAsyncThrow-Error');
-      if (success == false) reject("subPromise-Reject");
+      if (subPromiseSucceeds == false) reject("subPromise-Reject");
 
       log("subPromise end");
       resolve(x + " aaa");
